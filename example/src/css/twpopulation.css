@@ -9,3 +9,8 @@
 .q2-11{fill:rgb(102,189,99)}
 .q1-11{fill:rgb(26,152,80)}
 .q0-11{fill:rgb(0,104,55)}
+
+
+.polygon:hover {
+  fill-opacity: 0.5;
+}

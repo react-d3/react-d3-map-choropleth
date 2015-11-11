@@ -51,6 +51,8 @@ var css= require('./css/twpopulation.css');
   var center = [120.979531, 23.978567];
   var projection = 'mercator';
 
+  var tooltipContent = function(d) { return d.properties;}
+
   ReactDOM.render(
     <MapChoropleth
       width= {width}
@@ -66,6 +68,8 @@ var css= require('./css/twpopulation.css');
       center= {center}
       projection= {projection}
       showGraticule= {false}
+      tooltipContent= {tooltipContent}
+      showTooltip= {true}
     />
   , document.getElementById('blank-twpopulation')
   )

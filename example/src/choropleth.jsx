@@ -35,6 +35,8 @@ var css= require('./css/choropleth.css');
   var translate = [width / 2, height / 2];
   var projection = 'albersUsa';
 
+  var tooltipContent = function(d) {return d.properties;}
+
   ReactDOM.render(
     <MapChoropleth
       width= {width}
@@ -50,6 +52,8 @@ var css= require('./css/choropleth.css');
       translate= {translate}
       projection= {projection}
       showGraticule= {true}
+      tooltipContent= {tooltipContent}
+      showTooltip= {true}
     />
   , document.getElementById('blank-choropleth')
   )

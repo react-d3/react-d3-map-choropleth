@@ -7,3 +7,7 @@
 .q6-9 { fill:rgb(33,113,181); }
 .q7-9 { fill:rgb(8,81,156); }
 .q8-9 { fill:rgb(8,48,107); }
+
+.polygon:hover {
+  fill-opacity: 0.5;
+}

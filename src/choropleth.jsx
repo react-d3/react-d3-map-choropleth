@@ -11,7 +11,9 @@ import {
   Graticule,
   Mesh,
   Svg,
+  Tile,
   isTooltipUpdate,
+  tileFunc,
   scale as domainScaleFunc,
   projection as projectionFunc,
   geoPath as geoPathFunc
@@ -47,7 +49,8 @@ export default class Choropleth extends Component {
       domainKey,
       mapKey,
       onMouseOut,
-      onMouseOver
+      onMouseOver,
+      showTile
     } = this.props;
 
     var proj = projectionFunc({
@@ -69,7 +72,19 @@ export default class Choropleth extends Component {
       byId.set(domainKey(d), domainValue(d));
     })
 
-    var graticule, mesh, polygon;
+    var graticule, mesh, polygon, tile;
+
+    if(showTile && projection === 'mercator') {
+      var tiles= tileFunc({
+        scale: proj.scale() * 2 * Math.PI,
+        translate: proj([0, 0]),
+        size: ([width, height])
+      })
+
+      tile= (<Tile
+        tiles= {tiles}
+      />)
+    }
 
     if(showGraticule){
       graticule = (
@@ -79,57 +94,61 @@ export default class Choropleth extends Component {
       )
     }
 
-    if(dataPolygon && !Array.isArray(dataPolygon)) {
-      var val = byId.get(mapKey(d));
-      var polygonClass = domainScale(val);
-
-      d.properties[mapKey(d)] = val;
-
-      polygon = (
-        <Polygon
-          data = {dataPolygon}
-          geoPath= {geoPath}
-          onMouseOver= {onMouseOver}
-          onMouseOut= {onMouseOut}
-        />
-      )
-    }else {
-      polygon = dataPolygon.map((d, i) => {
+    if(dataPolygon) {
+      if(!Array.isArray(dataPolygon)) {
         var val = byId.get(mapKey(d));
         var polygonClass = domainScale(val);
 
         d.properties[mapKey(d)] = val;
 
-        return (
+        polygon = (
           <Polygon
-            key = {i}
-            data = {d}
+            data = {dataPolygon}
             geoPath= {geoPath}
-            polygonClass= {polygonClass}
             onMouseOver= {onMouseOver}
             onMouseOut= {onMouseOut}
           />
         )
-      })
+      }else {
+        polygon = dataPolygon.map((d, i) => {
+          var val = byId.get(mapKey(d));
+          var polygonClass = domainScale(val);
+
+          d.properties[mapKey(d)] = val;
+
+          return (
+            <Polygon
+              key = {i}
+              data = {d}
+              geoPath= {geoPath}
+              polygonClass= {polygonClass}
+              onMouseOver= {onMouseOver}
+              onMouseOut= {onMouseOut}
+            />
+          )
+        })
+      }
     }
 
-    if(dataMesh && !Array.isArray(dataMesh)) {
-      mesh = (
-        <Mesh
-          data = {dataMesh}
-          geoPath= {geoPath}
-        />
-      )
-    } else {
-      mesh = dataMesh.map((d, i) => {
-        return (
+    if(dataMesh) {
+      if(!Array.isArray(dataMesh)) {
+        mesh = (
           <Mesh
-            key = {i}
-            data = {d}
+            data = {dataMesh}
             geoPath= {geoPath}
           />
         )
-      })
+      } else {
+        mesh = dataMesh.map((d, i) => {
+          return (
+            <Mesh
+              key = {i}
+              data = {d}
+              geoPath= {geoPath}
+            />
+          )
+        })
+      }
     }
 
     return (
@@ -137,6 +156,7 @@ export default class Choropleth extends Component {
         width={width}
         height={height}
       >
+        {tile}
         {graticule}
         {polygon}
         {mesh}

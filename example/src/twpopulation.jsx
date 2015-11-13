@@ -70,6 +70,7 @@ var css= require('./css/twpopulation.css');
       showGraticule= {false}
       tooltipContent= {tooltipContent}
       showTooltip= {true}
+      showTile= {true}
     />
   , document.getElementById('blank-twpopulation')
   )

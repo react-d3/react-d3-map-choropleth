@@ -1,6 +1,6 @@
 {
   "name": "react-d3-map-choropleth",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "react-d3 map choropleth component",
   "main": "./lib/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "d3": "^3.5.6",
-    "react-d3-map-core": "^0.5.10",
+    "react-d3-map-core": "^0.6.0",
     "react-faux-dom": "^2.1.0"
   },
   "jest": {

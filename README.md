@@ -153,6 +153,10 @@ var css= require('./css/twpopulation.css');
 
 ![twpopulation](./example/img/twpopulation.png)
 
+### With tile
+
+![twpopulation-tile](./example/img/twpopulation-tile.png)
+
 ## Install
 
 ```

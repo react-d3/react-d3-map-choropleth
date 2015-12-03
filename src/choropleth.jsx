@@ -83,6 +83,8 @@ export default class Choropleth extends Component {
 
       tile= (<Tile
         tiles= {tiles}
+        translate= {tiles.translate}
+        scale= {tiles.scale}
       />)
     }
 
